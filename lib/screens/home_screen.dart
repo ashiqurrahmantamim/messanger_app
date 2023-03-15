@@ -183,7 +183,7 @@ class _BottomNavigationBarState extends State<_BottomNavigationBar> {
 
               //glowing_action_button
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:8.0),
+                padding: const EdgeInsets.symmetric(horizontal:08.0),
                 child: GlowingActionButton(
                   color: AppColors.secondary,
                   icon: CupertinoIcons.add,
@@ -237,13 +237,13 @@ class _NavigationBarItem extends StatelessWidget {
       },
       child: Expanded(
         child: SizedBox(
-          width: 50,
+          width: 60,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 icon,
-                size: 22,
+                size: 18,
                 color: isSelected ? AppColors.secondary : AppColors.iconLight,
               ),
               SizedBox(
@@ -253,11 +253,11 @@ class _NavigationBarItem extends StatelessWidget {
                 label,
                 style: isSelected
                     ? TextStyle(
-                        fontSize: 13,
+                        fontSize: 10,
                         fontWeight: FontWeight.bold,
                         color: AppColors.secondary)
                     : TextStyle(
-                        fontSize: 13,
+                        fontSize: 10,
                       ),
               ),
             ],
