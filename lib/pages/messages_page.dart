@@ -3,10 +3,10 @@ import 'package:chatter_app/models/models.dart';
 import 'package:chatter_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-
 import '../models/story_data.dart';
 import '../widgets/avatar.dart';
 import 'package:faker/faker.dart';
+import 'package:chatter_app/screens/screen.dart';
 
 class MessagesPage extends StatelessWidget {
   const MessagesPage({super.key});
@@ -28,7 +28,7 @@ class MessagesPage extends StatelessWidget {
   Widget _delegate(BuildContext contex, int index) {
     var faker = Faker();
     final date = Helpers.randomDate();
-    
+
     return _MessageTile(
         messageData: MessageData(
             senderName: faker.person.name(),
@@ -44,65 +44,95 @@ class _MessageTile extends StatelessWidget {
   final MessageData messageData;
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Avatar.medium(
-            url: messageData.profilePciture,
+    return InkWell(
+      onTap: () {
+        Navigator.of(context).push(ChatScreen.route(messageData));
+      },
+      child: Container(
+        height: 100,
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.grey,
+              width: 0.2,
+            ),
           ),
         ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
             children: [
-              Text(
-                messageData.senderName,
-                style: TextStyle(
-                    overflow: TextOverflow.ellipsis,
-                    fontWeight: FontWeight.w900,
-                    letterSpacing: 0.2,
-                    wordSpacing: 1.5),
-              ),
-              SizedBox(
-                  height: 25,
-                  child: Text(
-                    messageData.message,
-                    style: TextStyle(
-                        color: AppColors.secondary,
-                        overflow: TextOverflow.ellipsis),
-                  )),
-            ],
-          ),
-        ),
-
-        //janina
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(messageData.dateMessage.toUpperCase()),
-              SizedBox(height: 5,),
-              Container(
-                height: 18,
-                width: 18,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.secondary,
+              //user picture
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Avatar.medium(
+                  url: messageData.profilePciture,
                 ),
-               
-                child: Center(
-                  child: Text(
-                    "1",
-                    style: TextStyle(fontSize: 11, color: Colors.white),
+              ),
+              //user name and recive message
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        messageData.senderName,
+                        style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontWeight: FontWeight.w900,
+                            letterSpacing: 0.2,
+                            wordSpacing: 1.5),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      SizedBox(
+                          height: 25,
+                          child: Text(
+                            messageData.message,
+                            style: TextStyle(
+                                color: AppColors.secondary,
+                                overflow: TextOverflow.ellipsis),
+                          )),
+                    ],
                   ),
                 ),
-              )
+              ),
+
+              //time and message send number
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(messageData.dateMessage.toUpperCase()),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      height: 18,
+                      width: 18,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.secondary,
+                      ),
+                      child: Center(
+                        child: Text(
+                          "1",
+                          style: TextStyle(fontSize: 11, color: Colors.white),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ],
           ),
         ),
-      ],
+      ),
     );
   }
 }
